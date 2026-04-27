@@ -77,6 +77,7 @@ export default function Navbar() {
   const [estTime, setEstTime] = useState("");
   const pathname = usePathname();
   const { navigate } = usePageTransition();
+  const alwaysVisible = pathname === "/work" || pathname === "/timeline";
 
   useEffect(() => {
     const formatter = new Intl.DateTimeFormat("en-US", {
@@ -106,12 +107,20 @@ export default function Navbar() {
   useLayoutEffect(() => {
     const bar = barRef.current;
     if (!bar) return;
+    if (alwaysVisible) {
+      gsap.set(bar, { y: 0 });
+      return;
+    }
     gsap.set(bar, { y: -100 });
-  }, []);
+  }, [alwaysVisible]);
 
   useEffect(() => {
     const bar = barRef.current;
     if (!bar) return;
+    if (alwaysVisible) {
+      gsap.set(bar, { y: 0 });
+      return;
+    }
 
     const onScroll = () => {
       const show = window.scrollY > 80;
@@ -126,7 +135,7 @@ export default function Navbar() {
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [alwaysVisible]);
 
   useEffect(() => {
     if (!menuOpen) return;

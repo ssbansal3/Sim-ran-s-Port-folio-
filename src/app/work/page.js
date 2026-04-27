@@ -45,13 +45,27 @@ export default function WorkPage() {
       />
       <div ref={contentRef}>
         <main
+          className="bg-[var(--bg)]"
           style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}
         >
           <div style={{ textAlign: "center" }}>
             <p className={`${bebas.className} text-[var(--text)]`} style={{ fontSize: "clamp(3rem,10vw,8rem)" }}>
               COMING SOON
             </p>
-            <p style={{ color: "var(--muted)" }}>Projects & experience — coming soon</p>
+            <p
+              style={{
+                marginTop: 16,
+                color: "var(--muted)",
+                textTransform: "uppercase",
+                letterSpacing: "0.2em",
+                fontSize: "0.75rem",
+              }}
+            >
+              <span className="nav-dot-pulse" style={{ color: "var(--accent)", marginRight: 8 }}>
+                ●
+              </span>
+              Projects & experience loading
+            </p>
           </div>
         </main>
         <Footer />
