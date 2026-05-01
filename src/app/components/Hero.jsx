@@ -14,7 +14,7 @@ const DISPLAY_NAME = "SIMRAN BANSAL";
 // ── Tagline bank ──────────────────────────────────────────────────────────────
 // Add, remove, or reorder lines freely. They cycle randomly.
 const TAGLINES = [
-  "Just a Engineer on a mission to collect as many hobbies as possible.",
+  "Just an Engineer on a mission to collect as many hobbies as possible.",
   "An Engineer who values communication skills.",
   "Computer Engineering student by day, hobbyist by night.",
   "Automotive manager who couldn't pick between torque specs and TypeScript.",

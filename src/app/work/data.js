@@ -5,7 +5,7 @@ export const EXPERIENCE = [
     role: "Group Leader → Digital Enablement",
     company: "General Motors",
     location: "Oshawa, ON",
-    dates: "Sep 2025 — Present",
+    dates: "Sep 2025 - Present",
     year: "2025",
     size: "2x",
     photo: null, // typographic tile
@@ -22,7 +22,7 @@ export const EXPERIENCE = [
   },
   {
     id: "fsae",
-    code: "FS",
+    code: "FSAE",
     role: "High & Low Voltage Electrical (Member)",
     company: "UAlberta Formula Racing",
     location: "Edmonton, AB",
@@ -42,7 +42,7 @@ export const EXPERIENCE = [
   },
   {
     id: "studentworks",
-    code: "SW",
+    code: "SWP",
     role: "Project Manager (started as crew)",
     company: "Student Works",
     location: "Edmonton, AB",
@@ -63,7 +63,7 @@ export const EXPERIENCE = [
   },
   {
     id: "mkc",
-    code: "MK",
+    code: "MKC",
     role: "Coordinator (started as labour)",
     company: "Modern Kitchens & Construction",
     location: "Edmonton, AB",
@@ -216,7 +216,7 @@ export const PROJECTS = [
     links: [],
   },
   {
-    id: "busshelter",
+    id: "designproject",
     code: "BS",
     role: "Edmonton Bus Shelter Redesign (Team Lead)",
     company: "ENGG 100 — UAlberta",
