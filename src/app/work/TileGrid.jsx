@@ -3,18 +3,31 @@
 import Tile from "./Tile";
 
 export default function TileGrid({ tiles, activeFilter = "all", onTileClick }) {
+  const sortedTiles =
+    activeFilter && activeFilter !== "all"
+      ? [...tiles].sort((a, b) => {
+          const aMatches = a.categories?.includes(activeFilter) ? 0 : 1;
+          const bMatches = b.categories?.includes(activeFilter) ? 0 : 1;
+          return aMatches - bMatches;
+        })
+      : tiles;
+
   return (
-    <div className="grid grid-cols-1 gap-0 md:grid-cols-2 lg:grid-cols-4">
-      {tiles.map((tile, index) => {
+    <div
+      className="grid grid-flow-dense grid-cols-1 gap-0 md:grid-cols-2 lg:grid-cols-4"
+      style={{ gridAutoRows: "minmax(280px, 1fr)" }}
+    >
+      {sortedTiles.map((tile, index) => {
         const isDimmed =
           Boolean(activeFilter) &&
           activeFilter !== "all" &&
           !tile.categories.includes(activeFilter);
 
-        const spanClass = tile.size === "2x" ? "md:col-span-2 lg:col-span-2" : "";
+        const spanClass =
+          tile.size === "2x" ? "lg:col-span-2 lg:row-span-2" : "col-span-1";
 
         return (
-          <div key={tile.id} className={spanClass}>
+          <div key={tile.id} className={`${spanClass} flex`}>
             <Tile
               tile={tile}
               index={index}

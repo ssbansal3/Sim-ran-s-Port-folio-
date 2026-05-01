@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { Bebas_Neue, DM_Sans } from "next/font/google";
 
 const bebas = Bebas_Neue({ subsets: ["latin"], weight: ["400"] });
@@ -46,8 +47,75 @@ const links = [
   { label: "Email", href: "mailto:ssbansal731@gmail.com", external: true },
   { label: "LinkedIn", href: "https://linkedin.com/in/simransb", external: true },
   { label: "GitHub", href: "https://github.com/ssbansal3", external: true },
-  { label: "Resume", href: "/resume.pdf", external: false },
 ];
+
+const RESUME_VARIANTS = [
+  { label: "General", href: "/resume.pdf" },
+  { label: "Engineering", href: "/resume.pdf" },
+  { label: "Automotive", href: "/resume.pdf" },
+];
+
+function ResumePicker() {
+  const [open, setOpen] = useState(false);
+  const wrapRef = useRef(null);
+
+  useEffect(() => {
+    if (!open) return;
+
+    const onDocMouseDown = (event) => {
+      if (wrapRef.current && !wrapRef.current.contains(event.target)) {
+        setOpen(false);
+      }
+    };
+
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", onDocMouseDown);
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", onDocMouseDown);
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [open]);
+
+  return (
+    <div ref={wrapRef} className="relative">
+      <button
+        type="button"
+        onClick={() => setOpen((prev) => !prev)}
+        className={`${dmSans.className} text-left text-sm text-[var(--text)] transition-colors duration-200 hover:text-[#C17A3A]`}
+        aria-expanded={open}
+        aria-haspopup="true"
+      >
+        Resume ↗
+      </button>
+      {open ? (
+        <div
+          className="absolute left-0 top-full z-20 mt-2 min-w-[140px] rounded-md border border-[var(--border)] bg-[var(--bg)] p-2 shadow-lg"
+          role="menu"
+        >
+          {RESUME_VARIANTS.map((variant) => (
+            <a
+              key={variant.label}
+              href={variant.href}
+              target="_blank"
+              rel="noreferrer"
+              role="menuitem"
+              className={`${dmSans.className} block rounded px-3 py-2 text-sm text-[var(--text)] transition-colors hover:bg-[var(--surface)] hover:text-[#C17A3A]`}
+              onClick={() => setOpen(false)}
+            >
+              {variant.label}
+            </a>
+          ))}
+        </div>
+      ) : null}
+    </div>
+  );
+}
 
 export default function InfoRow() {
   return (
@@ -116,7 +184,7 @@ export default function InfoRow() {
           </div>
         </div>
 
-        <div>
+        <div className="relative">
           <p className={`${bebas.className} mb-3 text-xs tracking-widest text-[var(--muted)]`}>
             LINKS
           </p>
@@ -131,6 +199,7 @@ export default function InfoRow() {
                 {link.label} ↗
               </a>
             ))}
+            <ResumePicker />
           </div>
         </div>
       </div>
