@@ -13,12 +13,13 @@ const LINKS = [
   { id: "about", label: "About", href: "/about" },
 ];
 
-const DESKTOP_LINKS = [
-  { id: "home", label: "Home", href: "/" },
-  { id: "work", label: "Works", href: "/work" },
-  { id: "timeline", label: "Timeline", href: "/timeline" },
-  { id: "about", label: "About", href: "/about" },
-];
+const DESKTOP_LINKS = LINKS;
+
+// Routes where the navbar is visible immediately (no scroll trigger).
+const ALWAYS_VISIBLE_ROUTES = new Set(["/work", "/timeline"]);
+
+// Threshold above which the navbar reveals on scroll-triggered routes.
+const SCROLL_REVEAL_THRESHOLD = 80;
 
 function SplitLink({ label, active, onClick }) {
   const wordRef = useRef(null);
@@ -77,7 +78,7 @@ export default function Navbar() {
   const [estTime, setEstTime] = useState("");
   const pathname = usePathname();
   const { navigate } = usePageTransition();
-  const alwaysVisible = pathname === "/work" || pathname === "/timeline";
+  const alwaysVisible = ALWAYS_VISIBLE_ROUTES.has(pathname);
 
   useEffect(() => {
     const formatter = new Intl.DateTimeFormat("en-US", {
@@ -98,32 +99,36 @@ export default function Navbar() {
 
   const active = pathname === "/" ? "home" : pathname.replace("/", "");
 
-  const handleNavClick = useCallback((e, href) => {
-    e.preventDefault();
-    navigate(href);
-    setMenuOpen(false);
-  }, [navigate]);
+  const handleNavClick = useCallback(
+    (e, href) => {
+      e.preventDefault();
+      navigate(href);
+      setMenuOpen(false);
+    },
+    [navigate]
+  );
 
+  // Single source of truth for navbar visibility.
+  // Runs on every pathname change AND binds scroll listener for scroll-triggered routes.
+  // Using useLayoutEffect so the bar is positioned before paint — no flash on route change.
   useLayoutEffect(() => {
     const bar = barRef.current;
     if (!bar) return;
-    if (alwaysVisible) {
-      gsap.set(bar, { y: 0 });
-      return;
-    }
-    gsap.set(bar, { y: -100 });
-  }, [alwaysVisible]);
 
-  useEffect(() => {
-    const bar = barRef.current;
-    if (!bar) return;
+    // Kill any in-flight tweens from a previous route so they don't fight us.
+    gsap.killTweensOf(bar);
+
     if (alwaysVisible) {
       gsap.set(bar, { y: 0 });
-      return;
+      return; // No scroll listener needed.
     }
+
+    // Scroll-triggered route: position based on current scrollY.
+    const visible = window.scrollY > SCROLL_REVEAL_THRESHOLD;
+    gsap.set(bar, { y: visible ? 0 : -100 });
 
     const onScroll = () => {
-      const show = window.scrollY > 80;
+      const show = window.scrollY > SCROLL_REVEAL_THRESHOLD;
       gsap.to(bar, {
         y: show ? 0 : -100,
         duration: 0.4,
@@ -133,9 +138,8 @@ export default function Navbar() {
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
     return () => window.removeEventListener("scroll", onScroll);
-  }, [alwaysVisible]);
+  }, [alwaysVisible, pathname]);
 
   useEffect(() => {
     if (!menuOpen) return;
