@@ -2,7 +2,7 @@
 
 import Tile from "./Tile";
 
-export default function TileGrid({ tiles, activeFilter = "all", onTileClick }) {
+export default function TileGrid({ tiles, activeFilter = "all", onTileClick, compact = false }) {
   const sortedTiles =
     activeFilter && activeFilter !== "all"
       ? [...tiles].sort((a, b) => {
@@ -15,7 +15,7 @@ export default function TileGrid({ tiles, activeFilter = "all", onTileClick }) {
   return (
     <div
       className="grid grid-flow-dense grid-cols-1 gap-0 md:grid-cols-2 lg:grid-cols-4"
-      style={{ gridAutoRows: "minmax(280px, 1fr)" }}
+      style={{ gridAutoRows: compact ? "minmax(220px, 1fr)" : "minmax(520px, 1fr)" }}
     >
       {sortedTiles.map((tile, index) => {
         const isDimmed =

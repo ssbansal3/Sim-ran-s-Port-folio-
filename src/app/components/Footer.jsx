@@ -2,19 +2,21 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Bebas_Neue } from "next/font/google";
+import { usePageTransition } from "./PageTransition";
 
 const bebas = Bebas_Neue({ subsets: ["latin"], weight: ["400"] });
 
 const NAV_LINKS = [
-  { id: "home", label: "Home" },
-  { id: "work", label: "Works" },
-  { id: "timeline", label: "Timeline" },
-  { id: "about", label: "About" },
+  { id: "home", label: "Home", href: "/" },
+  { id: "work", label: "Works", href: "/work" },
+  { id: "timeline", label: "Timeline", href: "/timeline" },
+  { id: "about", label: "About", href: "/about" },
 ];
 
 const marqueeItems = Array.from({ length: 12 }, (_, i) => `LET'S CHAT-${i}`);
 
 export default function Footer() {
+  const { navigate } = usePageTransition();
   const [estTime, setEstTime] = useState("");
 
   useEffect(() => {
@@ -41,11 +43,6 @@ export default function Footer() {
       )),
     []
   );
-
-  const scrollTo = (id) => {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
 
   return (
     <footer className="mt-auto w-full bg-[var(--text)] text-[var(--bg)]">
@@ -139,7 +136,7 @@ export default function Footer() {
                 <button
                   key={link.id}
                   type="button"
-                  onClick={() => scrollTo(link.id)}
+                  onClick={() => navigate(link.href)}
                   className="w-fit text-right text-[var(--bg)] transition hover:opacity-70"
                 >
                   {link.label}
