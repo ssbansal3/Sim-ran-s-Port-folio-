@@ -94,10 +94,10 @@ export default function WorkPage() {
             <h2
               className={`${bebas.className} mb-6 mt-12 text-2xl tracking-widest text-[var(--muted)]`}
             >
-              EARLIER EXPERIENCE
+              PROJECTS
             </h2>
             <TileGrid
-              tiles={EARLIER_EXPERIENCE}
+              tiles={PROJECTS}
               activeFilter={activeFilter}
               onTileClick={setOpenTile}
             />
@@ -107,9 +107,9 @@ export default function WorkPage() {
             <h2
               className={`${bebas.className} mb-6 mt-12 text-2xl tracking-widest text-[var(--muted)]`}
             >
-              PROJECTS
+              EARLIER EXPERIENCE
             </h2>
-            <TileGrid tiles={PROJECTS} activeFilter={activeFilter} onTileClick={setOpenTile} />
+            <TileGrid tiles={EARLIER_EXPERIENCE} activeFilter={activeFilter} onTileClick={setOpenTile} />
           </section>
         </main>
         <Footer />

@@ -21,7 +21,12 @@ export default function TimelinePage() {
     gsap.set(overlay, { x: "-100%" });
     gsap.set(tape1, { scaleX: 0, transformOrigin: "left center" });
     gsap.set(tape2, { scaleX: 0, transformOrigin: "right center" });
-    gsap.set(warning, { y: -600, rotate: -4, opacity: 1 });
+    gsap.set(warning, {
+      y: -600,
+      rotate: -4,
+      opacity: 0,
+      visibility: "hidden",
+    });
 
     const ctx = gsap.context(() => {
       gsap
@@ -31,7 +36,8 @@ export default function TimelinePage() {
         .to(overlay, { x: "100%", duration: 0.6, ease: "power2.in" })
         .to(tape1, { scaleX: 1, duration: 0.5, ease: "power3.out" })
         .to(tape2, { scaleX: 1, duration: 0.5, ease: "power3.out" }, "+=0.15")
-        .to(warning, { y: 0, duration: 0.45, ease: "power4.out" }, "+=0.2")
+        .set(warning, { opacity: 1, visibility: "visible" }, "+=0.2")
+        .to(warning, { y: 0, duration: 0.45, ease: "power4.out" })
         .to(warning, { y: -12, duration: 0.1, ease: "power2.inOut" })
         .to(warning, { y: 0, duration: 0.2, ease: "elastic.out(1, 0.5)" });
     });
@@ -96,6 +102,8 @@ export default function TimelinePage() {
           position: "fixed",
           left: "50%", top: "50%",
           transform: "translate(-50%, -50%) rotate(-4deg)",
+          opacity: 0,
+          visibility: "hidden",
           zIndex: 30,
           width: "clamp(300px, 38vw, 500px)",
           padding: "36px 44px",
