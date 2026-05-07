@@ -12,37 +12,44 @@ export default function TimelinePage() {
   const warningRef = useRef(null);
 
   useLayoutEffect(() => {
-    const overlay = overlayRef.current;
-    const tape1 = tape1Ref.current;
-    const tape2 = tape2Ref.current;
-    const warning = warningRef.current;
-    if (!overlay || !tape1 || !tape2 || !warning) return;
+    let ctx = null;
 
-    gsap.set(overlay, { x: "-100%" });
-    gsap.set(tape1, { scaleX: 0, transformOrigin: "left center" });
-    gsap.set(tape2, { scaleX: 0, transformOrigin: "right center" });
-    gsap.set(warning, {
-      y: -600,
-      rotate: -4,
-      opacity: 0,
-      visibility: "hidden",
-    });
+    const timerId = window.setTimeout(() => {
+      const overlay = overlayRef.current;
+      const tape1 = tape1Ref.current;
+      const tape2 = tape2Ref.current;
+      const warning = warningRef.current;
+      if (!overlay || !tape1 || !tape2 || !warning) return;
 
-    const ctx = gsap.context(() => {
-      gsap
-        .timeline()
-        .to(overlay, { x: "0%", duration: 0.6, ease: "power2.out" })
-        .to({}, { duration: 0.3 })
-        .to(overlay, { x: "100%", duration: 0.6, ease: "power2.in" })
-        .to(tape1, { scaleX: 1, duration: 0.5, ease: "power3.out" })
-        .to(tape2, { scaleX: 1, duration: 0.5, ease: "power3.out" }, "+=0.15")
-        .set(warning, { opacity: 1, visibility: "visible" }, "+=0.2")
-        .to(warning, { y: 0, duration: 0.45, ease: "power4.out" })
-        .to(warning, { y: -12, duration: 0.1, ease: "power2.inOut" })
-        .to(warning, { y: 0, duration: 0.2, ease: "elastic.out(1, 0.5)" });
-    });
+      gsap.set(overlay, { x: "-100%" });
+      gsap.set(tape1, { scaleX: 0, transformOrigin: "left center" });
+      gsap.set(tape2, { scaleX: 0, transformOrigin: "right center" });
+      gsap.set(warning, {
+        y: -600,
+        rotate: -4,
+        opacity: 0,
+        visibility: "hidden",
+      });
 
-    return () => ctx.revert();
+      ctx = gsap.context(() => {
+        gsap
+          .timeline()
+          .to(overlay, { x: "0%", duration: 0.6, ease: "power2.out" })
+          .to({}, { duration: 0.3 })
+          .to(overlay, { x: "100%", duration: 0.6, ease: "power2.in" })
+          .to(tape1, { scaleX: 1, duration: 0.5, ease: "power3.out" })
+          .to(tape2, { scaleX: 1, duration: 0.5, ease: "power3.out" }, "+=0.15")
+          .set(warning, { opacity: 1, visibility: "visible" }, "+=0.2")
+          .to(warning, { y: 0, duration: 0.45, ease: "power4.out" })
+          .to(warning, { y: -12, duration: 0.1, ease: "power2.inOut" })
+          .to(warning, { y: 0, duration: 0.2, ease: "elastic.out(1, 0.5)" });
+      });
+    }, 100);
+
+    return () => {
+      window.clearTimeout(timerId);
+      ctx?.revert();
+    };
   }, []);
 
   return (
