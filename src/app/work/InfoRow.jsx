@@ -50,9 +50,9 @@ const links = [
 ];
 
 const RESUME_VARIANTS = [
-  { label: "General", href: "/resume.pdf" },
-  { label: "Engineering", href: "/resume.pdf" },
-  { label: "Automotive", href: "/resume.pdf" },
+  { label: "General", href: "/resume" },
+  { label: "Engineering", href: "/resume" },
+  { label: "Automotive", href: "/resume" },
 ];
 
 function ResumePicker() {
@@ -102,8 +102,6 @@ function ResumePicker() {
             <a
               key={variant.label}
               href={variant.href}
-              target="_blank"
-              rel="noreferrer"
               role="menuitem"
               className={`${dmSans.className} block rounded px-3 py-2 text-sm text-[var(--text)] transition-colors hover:bg-[var(--surface)] hover:text-[#C17A3A]`}
               onClick={() => setOpen(false)}

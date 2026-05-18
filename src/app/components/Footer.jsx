@@ -122,7 +122,7 @@ export default function Footer() {
               >
                 GitHub
               </a>
-              <a href="/resume.pdf" className="text-[var(--bg)] transition hover:opacity-70">
+              <a href="/resume" className="text-[var(--bg)] transition hover:opacity-70">
                 Resume
               </a>
             </div>
