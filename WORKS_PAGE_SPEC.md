@@ -104,7 +104,7 @@ Stacked icon+name pills, one per line. Format: `[icon]  Company Name  ↗` (the 
 Order:
 1. General Motors (link to gm.com)
 2. UAlberta Formula Racing (link if available, else no arrow)
-3. Student Works (link to studentworks.com)
+3. Student Works (link to studentworks.ca)
 4. Modern Kitchens & Construction (link to mkc website when ready — leave `#` placeholder)
 5. Hugo Boss
 6. Best Buy

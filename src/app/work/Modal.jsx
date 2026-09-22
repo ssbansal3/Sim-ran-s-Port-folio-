@@ -98,7 +98,7 @@ export default function Modal({ tile, onClose }) {
             {tile.role} · {tile.company} · {tile.dates} · {tile.location}
           </p>
 
-          <p className={`${dmSans.className} mt-4 text-base leading-relaxed text-[var(--text)]`}>
+          <p className={`${dmSans.className} mt-4 whitespace-pre-line text-base leading-relaxed text-[var(--text)]`}>
             {tile.narrative}
           </p>
 

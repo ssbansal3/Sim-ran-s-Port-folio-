@@ -52,22 +52,34 @@ function SplitLink({ label, active, onClick }) {
       onClick={onClick}
       onMouseEnter={() => animateWord(true)}
       onMouseLeave={() => animateWord(false)}
+      aria-label={label}
       className={[
         "text-xs font-medium uppercase tracking-[0.2em] transition-colors duration-300",
         active ? "text-[var(--text)]" : "text-[var(--muted)] hover:text-[var(--text)]",
       ].join(" ")}
     >
-      {label.split("").map((char, i) => (
-        <span
-          key={`${label}-${char}-${i}`}
-          style={{ display: "inline-block", overflow: "hidden", height: "1em", verticalAlign: "top" }}
-        >
-          <span data-link-letter className="flex flex-col" style={{ willChange: "transform" }}>
-            <span className="block leading-none">{char === " " ? "\u00A0" : char}</span>
-            <span className="block leading-none">{char === " " ? "\u00A0" : char}</span>
-          </span>
-        </span>
-      ))}
+      <span className="sr-only">{label}</span>
+      {/* Roll duplicate lives in CSS ::after — keeps HTML/AT text as "Home", not "HHoommee". */}
+      <span aria-hidden="true">
+        {label.split("").map((char, i) => {
+          const glyph = char === " " ? "\u00A0" : char;
+          return (
+            <span
+              key={`${label}-${char}-${i}`}
+              style={{ display: "inline-block", overflow: "hidden", height: "1em", verticalAlign: "top" }}
+            >
+              <span
+                data-link-letter
+                data-roll-char={glyph}
+                className="flex flex-col leading-none"
+                style={{ willChange: "transform" }}
+              >
+                {glyph}
+              </span>
+            </span>
+          );
+        })}
+      </span>
     </button>
   );
 }
@@ -169,8 +181,8 @@ export default function Navbar() {
         >
           <span className="hidden items-center gap-4 text-xs font-medium uppercase tracking-[0.2em] text-[var(--muted)] md:inline-flex">
             <span className="text-[var(--accent)] nav-dot-pulse">●</span>
-            <span>OSHAWA, ON</span>
-            <span>{estTime} EST</span>
+            <span>EDMONTON, AB</span>
+            <span>{estTime} MDT</span>
           </span>
 
           <div className="hidden items-center justify-end gap-8 md:flex md:gap-10">

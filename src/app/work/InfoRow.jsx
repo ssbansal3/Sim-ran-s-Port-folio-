@@ -9,7 +9,7 @@ const dmSans = DM_Sans({ subsets: ["latin"], weight: ["400", "500"] });
 const companies = [
   { name: "General Motors", href: "https://www.gm.com", arrow: true },
   { name: "UAlberta Formula Racing", href: null, arrow: false },
-  { name: "Student Works", href: "https://studentworks.com", arrow: true },
+  { name: "Student Works", href: "https://studentworks.ca", arrow: true },
   { name: "Modern Kitchens & Construction", href: "#", arrow: false },
   { name: "Hugo Boss", href: "https://www.hugoboss.com", arrow: true },
   { name: "Best Buy", href: "https://www.bestbuy.ca", arrow: true },

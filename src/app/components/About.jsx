@@ -233,33 +233,43 @@ export default function About() {
           <h2
             ref={nameRef}
             className={`${bebas.className} text-center text-[clamp(5rem,18vw,16rem)] uppercase leading-none tracking-tight text-[var(--text)]`}
-            aria-label="About Me"
           >
-            {TEXT.split("").map((char, i) => (
-              <span
-                key={`${char}-${i}`}
-                style={{ display: "inline-block", overflow: "hidden", height: "0.85em", verticalAlign: "top" }}
-                onMouseEnter={() => {
-                  const inner = rollTargetsRef.current[i];
-                  if (!inner) return;
-                  gsap.to(inner, { yPercent: -50, duration: 0.4, ease: "power2.out", overwrite: "auto" });
-                }}
-                onMouseLeave={() => {
-                  const inner = rollTargetsRef.current[i];
-                  if (!inner) return;
-                  gsap.to(inner, { yPercent: 0, duration: 0.4, ease: "power2.out", overwrite: "auto" });
-                }}
-              >
-                <span
-                  data-roll-inner
-                  ref={(el) => { if (el) rollTargetsRef.current[i] = el; }}
-                  style={{ display: "flex", flexDirection: "column", willChange: "transform" }}
-                >
-                  <span style={{ display: "block", lineHeight: "0.85em" }}>{char === " " ? "\u00A0" : char}</span>
-                  <span style={{ display: "block", lineHeight: "0.85em" }}>{char === " " ? "\u00A0" : char}</span>
-                </span>
-              </span>
-            ))}
+            <span className="sr-only">About Me</span>
+            <span aria-hidden="true">
+              {TEXT.split("").map((char, i) => {
+                const glyph = char === " " ? "\u00A0" : char;
+                return (
+                  <span
+                    key={`${char}-${i}`}
+                    style={{ display: "inline-block", overflow: "hidden", height: "0.85em", verticalAlign: "top" }}
+                    onMouseEnter={() => {
+                      const inner = rollTargetsRef.current[i];
+                      if (!inner) return;
+                      gsap.to(inner, { yPercent: -50, duration: 0.4, ease: "power2.out", overwrite: "auto" });
+                    }}
+                    onMouseLeave={() => {
+                      const inner = rollTargetsRef.current[i];
+                      if (!inner) return;
+                      gsap.to(inner, { yPercent: 0, duration: 0.4, ease: "power2.out", overwrite: "auto" });
+                    }}
+                  >
+                    <span
+                      data-roll-inner
+                      data-roll-char={glyph}
+                      ref={(el) => { if (el) rollTargetsRef.current[i] = el; }}
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        willChange: "transform",
+                        lineHeight: "0.85em",
+                      }}
+                    >
+                      {glyph}
+                    </span>
+                  </span>
+                );
+              })}
+            </span>
           </h2>
 
           <div style={{ position: "relative", width: "100%", marginTop: "48px" }}>
@@ -385,6 +395,18 @@ export default function About() {
         >
           {blockText3}
         </div>
+
+        <p
+          className={`${dmSans.className} mx-auto mt-16 w-full max-w-[640px] text-center text-[clamp(1rem,2.2vw,1.25rem)] font-normal leading-relaxed text-[var(--muted)]`}
+        >
+          Right now I&apos;m looking for internships where automotive engineering
+          meets software — including calibration roles, where conversations with
+          EGMs, managers, and calibration leads have pointed to my computer
+          engineering background and manufacturing-floor experience as a strong,
+          transferable fit. I&apos;m equally open to software and full-stack roles,
+          drawing on hands-on production problem-solving and the full-stack tools
+          I&apos;ve built at GM.
+        </p>
 
         <div
           ref={blockRef4}

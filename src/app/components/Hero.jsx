@@ -21,7 +21,6 @@ const TAGLINES = [
   "If it looks interesting, I'm probably learning it.",
   "I love talking to people... about anything and everything.",
   "I DO NOT HAVE ADHD!",
-  "Proffesional Yapper",
   "\"The expert in anything was once a beginner.\" - Helen Hayes",
   "\"Jack of all trades, master of none (often times better than the master of one).\"",
   "\"Be Bold!\" - Jay Card",
@@ -194,32 +193,38 @@ useEffect(() => {
         <h1
           ref={nameBlockRef}
           className={`${bebas.className} w-screen max-w-[100dvw] cursor-default select-none whitespace-nowrap text-center text-[clamp(6rem,20vw,20rem)] uppercase leading-none tracking-tight text-[var(--text)]`}
-          aria-label="Simran Bansal"
         >
-          {DISPLAY_NAME.split("").map((char, i) => (
-            <span
-              key={`${char}-${i}`}
-              style={{ display: "inline-block", overflow: "hidden", height: "1em", verticalAlign: "top" }}
-              onMouseEnter={() => {
-                const inner = rollTargetsRef.current[i];
-                if (inner) gsap.to(inner, { yPercent: -50, duration: 0.4, ease: "power2.out", overwrite: "auto" });
-              }}
-              onMouseLeave={() => {
-                const inner = rollTargetsRef.current[i];
-                if (inner) gsap.to(inner, { yPercent: 0, duration: 0.4, ease: "power2.out", overwrite: "auto" });
-              }}
-            >
-              <span
-                data-roll-inner
-                ref={(el) => { if (el) rollTargetsRef.current[i] = el; }}
-                className="flex flex-col"
-                style={{ willChange: "transform" }}
-              >
-                <span className="block leading-none">{char === " " ? "\u00A0" : char}</span>
-                <span className="block leading-none">{char === " " ? "\u00A0" : char}</span>
-              </span>
-            </span>
-          ))}
+          {/* Clean name for crawlers/AT; animated glyphs are decorative duplicates via CSS ::after. */}
+          <span className="sr-only">Simran Bansal</span>
+          <span aria-hidden="true">
+            {DISPLAY_NAME.split("").map((char, i) => {
+              const glyph = char === " " ? "\u00A0" : char;
+              return (
+                <span
+                  key={`${char}-${i}`}
+                  style={{ display: "inline-block", overflow: "hidden", height: "1em", verticalAlign: "top" }}
+                  onMouseEnter={() => {
+                    const inner = rollTargetsRef.current[i];
+                    if (inner) gsap.to(inner, { yPercent: -50, duration: 0.4, ease: "power2.out", overwrite: "auto" });
+                  }}
+                  onMouseLeave={() => {
+                    const inner = rollTargetsRef.current[i];
+                    if (inner) gsap.to(inner, { yPercent: 0, duration: 0.4, ease: "power2.out", overwrite: "auto" });
+                  }}
+                >
+                  <span
+                    data-roll-inner
+                    data-roll-char={glyph}
+                    ref={(el) => { if (el) rollTargetsRef.current[i] = el; }}
+                    className="flex flex-col leading-none"
+                    style={{ willChange: "transform" }}
+                  >
+                    {glyph}
+                  </span>
+                </span>
+              );
+            })}
+          </span>
         </h1>
 
         <p className="mt-5 max-w-3xl text-center text-[clamp(0.75rem,2.2vw,1rem)] font-light leading-relaxed text-[var(--muted)] sm:mt-6">

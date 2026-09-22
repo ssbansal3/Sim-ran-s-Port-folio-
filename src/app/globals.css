@@ -143,3 +143,14 @@ body {
   animation: hero-scroll-bob 1.8s ease-in-out infinite;
 }
 
+/*
+ * Roll-letter hover: duplicate glyph via ::after so the DOM/SSR text
+ * stays "Home" / "SIMRAN BANSAL" instead of "HHoommee" / "SSIIMMRRAANN…".
+ * Animation still translates the stacked pair with yPercent -50.
+ */
+[data-roll-char]::after {
+  content: attr(data-roll-char);
+  display: block;
+  line-height: inherit;
+}
+

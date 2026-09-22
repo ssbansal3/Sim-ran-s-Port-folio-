@@ -192,29 +192,36 @@ const MagneticButton = forwardRef(function MagneticButton(
         onMouseLeave={onLeave}
         onFocus={() => setHover(true)}
         onBlur={() => setHover(false)}
+        aria-label={text}
         className={`magnetic-button-anchor ${bebas.className} relative inline-block cursor-pointer select-none whitespace-nowrap uppercase focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)] active:opacity-70 ${sizeClass}`}
       >
-        {letters.map((char, i) => (
-          <span
-            key={`${char}-${i}`}
-            data-mb-letter
-            style={{
-              display: "inline-block",
-              overflow: "hidden",
-              height: "1em",
-              verticalAlign: "top",
-            }}
-          >
-            <span
-              data-roll-inner
-              className="flex flex-col"
-              style={{ willChange: "transform" }}
-            >
-              <span className="block leading-none">{char === " " ? "\u00A0" : char}</span>
-              <span className="block leading-none">{char === " " ? "\u00A0" : char}</span>
-            </span>
-          </span>
-        ))}
+        <span className="sr-only">{text}</span>
+        <span aria-hidden="true">
+          {letters.map((char, i) => {
+            const glyph = char === " " ? "\u00A0" : char;
+            return (
+              <span
+                key={`${char}-${i}`}
+                data-mb-letter
+                style={{
+                  display: "inline-block",
+                  overflow: "hidden",
+                  height: "1em",
+                  verticalAlign: "top",
+                }}
+              >
+                <span
+                  data-roll-inner
+                  data-roll-char={glyph}
+                  className="flex flex-col leading-none"
+                  style={{ willChange: "transform" }}
+                >
+                  {glyph}
+                </span>
+              </span>
+            );
+          })}
+        </span>
         {!skipFx ? (
           <span
             ref={underlineRef}
