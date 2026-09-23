@@ -97,7 +97,7 @@ export default function Navbar() {
       hour: "2-digit",
       minute: "2-digit",
       hour12: true,
-      timeZone: "America/Toronto",
+      timeZone: "America/Edmonton",
     });
 
     const tick = () => {

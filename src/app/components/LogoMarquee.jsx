@@ -4,73 +4,54 @@ import { useMemo } from "react";
 
 /**
  * Edit this list to add or reorder brands/tools shown in the Works "film".
- * Place matching SVG files under `public/logos/`. If a file is missing, a styled text fallback appears.
  */
 export const LOGOS = [
-  { name: "General Motors", src: "/logos/gm.svg", url: "https://www.gm.com" },
-  { name: "UAlberta Formula Racing", src: "/logos/uafr.svg", url: "https://ualbertaracing.ca" },
-  { name: "University of Alberta", src: "/logos/ualberta.svg", url: "https://www.ualberta.ca" },
-  { name: "Student Works", src: "/logos/studentworks.svg", url: "https://studentworks.ca" },
-  { name: "Modern Kitchens & Construction", src: "/logos/modernkitchens.svg", url: "" },
-  { name: "Hugo Boss", src: "/logos/hugoboss.svg", url: "https://www.hugoboss.com" },
-  { name: "Best Buy", src: "/logos/bestbuy.svg", url: "https://www.bestbuy.com" },
-  { name: "Yamaha", src: "/logos/yamaha.svg", url: "https://www.yamaha.com" },
-  { name: "Hertz Audio", src: "/logos/hertzaudio.svg", url: "https://www.hertzaudio.com" },
-  { name: "Python", src: "/logos/python.svg" },
-  { name: "Java", src: "/logos/java.svg" },
-  { name: "C", src: "/logos/c.svg" },
-  { name: "C++", src: "/logos/cpp.svg" },
-  { name: "JavaScript", src: "/logos/javascript.svg" },
-  { name: "HTML5", src: "/logos/html5.svg" },
-  { name: "CSS3", src: "/logos/css3.svg" },
-  { name: "VHDL", src: "/logos/vhdl.svg" },
-  { name: "React", src: "/logos/react.svg" },
-  { name: "Node.js", src: "/logos/nodejs.svg" },
-  { name: "Next.js", src: "/logos/nextjs.svg" },
-  { name: "Express", src: "/logos/express.svg" },
-  { name: "jQuery", src: "/logos/jquery.svg" },
-  { name: "Git", src: "/logos/git.svg" },
-  { name: "Linux", src: "/logos/linux.svg" },
-  { name: "Excel", src: "/logos/excel.svg" },
-  { name: "Power BI", src: "/logos/powerbi.svg" },
-  { name: "Power Automate", src: "/logos/powerautomate.svg" },
-  { name: "Databricks", src: "/logos/databricks.svg" },
-  { name: "AutoCAD", src: "/logos/autocad.svg" },
-  { name: "KiCAD", src: "/logos/kicad.svg" },
-  { name: "SolidWorks", src: "/logos/solidworks.svg" },
-  { name: "TinkerCAD", src: "/logos/tinkercad.svg" },
-  { name: "Arduino", src: "/logos/arduino.svg" },
-  { name: "Raspberry Pi", src: "/logos/raspberrypi.svg" },
-  { name: "PrusaSlicer", src: "/logos/prusaslicer.svg" },
+  { name: "General Motors" },
+  { name: "UAlberta Formula Racing" },
+  { name: "University of Alberta" },
+  { name: "Student Works" },
+  { name: "Modern Kitchens & Construction" },
+  { name: "Hugo Boss" },
+  { name: "Best Buy" },
+  { name: "Yamaha" },
+  { name: "Hertz Audio" },
+  { name: "Python" },
+  { name: "Java" },
+  { name: "C" },
+  { name: "C++" },
+  { name: "JavaScript" },
+  { name: "HTML5" },
+  { name: "CSS3" },
+  { name: "VHDL" },
+  { name: "React" },
+  { name: "Node.js" },
+  { name: "Next.js" },
+  { name: "Express" },
+  { name: "jQuery" },
+  { name: "Git" },
+  { name: "Linux" },
+  { name: "Excel" },
+  { name: "Power BI" },
+  { name: "Power Automate" },
+  { name: "Databricks" },
+  { name: "AutoCAD" },
+  { name: "KiCAD" },
+  { name: "SolidWorks" },
+  { name: "TinkerCAD" },
+  { name: "Arduino" },
+  { name: "Raspberry Pi" },
+  { name: "PrusaSlicer" },
 ];
 
 function LogoItem({ logo }) {
-  const pill = (
-    <span className="inline-flex h-10 items-center whitespace-nowrap rounded-full border border-current/30 px-4 text-[11px] font-semibold uppercase tracking-[0.15em] text-[var(--text)] sm:h-12 sm:text-xs md:h-14">
-      {logo.name}
-    </span>
-  );
-
-  const className =
-    "logo-hit opacity-50 saturate-[0.7] transition-all duration-300 hover:scale-105 hover:opacity-100 hover:saturate-100";
-
-  if (logo.url) {
-    return (
-      <a
-        href={logo.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={`${className} inline-flex cursor-pointer`}
-        title={logo.name}
-      >
-        {pill}
-      </a>
-    );
-  }
-
   return (
-    <span className={`${className} inline-flex cursor-default`} title={logo.name}>
-      {pill}
+    <span
+      className="logo-hit inline-flex cursor-default opacity-50 saturate-[0.7] transition-all duration-300 hover:scale-105 hover:opacity-100 hover:saturate-100"
+      title={logo.name}
+    >
+      <span className="inline-flex h-10 items-center whitespace-nowrap rounded-full border border-current/30 px-4 text-[11px] font-semibold uppercase tracking-[0.15em] text-[var(--text)] sm:h-12 sm:text-xs md:h-14">
+        {logo.name}
+      </span>
     </span>
   );
 }
